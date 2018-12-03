@@ -15,54 +15,51 @@ $cur_min = date ("i");
 
 <!--年月日の入力フォームを作成-->
 <form method="POST" action="add_process.php">
-登録日時：<select name="year">
-    <option> <?=$cur_yer?> </option>
-    <?php foreach(range ($cur_yer, 1900) as $year): ?><!--1900年から現在年までのセレクトボックスを生成（初期値は現在年）-->
-    <option> <?=$year?> </option>
-<?php endforeach; ?>
-</select>
-年
-<select name="month">
-    <option> <?=$cur_mon?> </option>
-        <?php foreach(range (12, 1) as $month): ?><!--1から12までの数字のセレクトボックスを生成（初期値は現在月）-->
+
+    登録日時：<select name="year">
+        <?php foreach(range (1900, $cur_yer - 1) as $year): ?><!--1900年から現在までのセレクトボックスを生成（初期値は現在年）-->
+        <option> <?=$year?> </option>
+        <?php endforeach; ?>
+        <option selected> <?=$cur_yer?> </option>
+    </select>
+    年
+    <select name="month">
+        <?php foreach(range (1, 12) as $month): ?><!--1から12までの数字のセレクトボックスを生成（初期値は現在月）-->
         <option> <?=$month?> </option>
         <?php endforeach; ?> 
-</select>
-月
-<select name="day">
-    <option> <?=$cur_day?> </option>
-        <?php foreach(range(31, 1) as $day): ?><!--1から31までの数字のセレクトボックスを生成（初期値は現在日）-->
+    </select>
+    月
+    <select name="day">
+        <?php foreach(range(1, 31) as $day): ?><!--1から31までの数字のセレクトボックスを生成（初期値は現在日）-->
         <option> <?=$day?> </option>
-    <?php endforeach; ?>
-</select>
-日
-<select name="hour">
-    <option> <?=$cur_hou?> </option>
-        <?php foreach(range(24, 01) as $hour): ?><!--1から24までの数字のセレクトボックスを生成（初期値は現在時）-->
+        <?php endforeach; ?>
+    </select>
+    日
+    <select name="hour">
+        <?php foreach(range(01, 24) as $hour): ?><!--1から24までの数字のセレクトボックスを生成（初期値は現在時）-->
         <option > <?=$hour?> </option>
-    <?php endforeach;?>
-</select>
-時
-<select name="min">
-    <option> <?=$cur_min?> </option>
-        <?php foreach(range(59, 00) as $min): ?><!--00から59までの数字のセレクトボックスを生成（初期値は現在時）-->
+        <?php endforeach;?>
+    </select>
+    時
+    <select name="min">
+        <?php foreach(range(00, 59) as $min): ?><!--00から59までの数字のセレクトボックスを生成（初期値は現在時）-->
         <option> <?=$min?> </option>
-    <?php endforeach;?>
-</select>
-分
+        <?php endforeach;?>
+    </select>
+    分
 
-<br/>
+    <br/>
 
-金額：<input type="text" name="price" size="10" maxlength="10"> <br/>
-カテゴリ：<select name="category">
-            <option>食費</option>
-        </select><br/>
+    金額：<input type="text" name="price" size="10" maxlength="10"> <br/>
+    カテゴリ：<select name="category">
+                <option>食費</option>
+            </select><br/>
 
-支出：<input type="radio" name="exp_inc" value="1"> 
-収入：<input type="radio" name="exp_inc" value="2"><br/>
+    支出：<input type="radio" name="exp_inc" value="1"> 
+    収入：<input type="radio" name="exp_inc" value="2"><br/>
 
-備考：<input type="text" name="remarks" size="10" maxlength="20"><br/>
-<input type="submit" name="登録する">
+    備考：<input type="text" name="remarks" size="10" maxlength="20"><br/>
+    <input type="submit" name="登録する">
 </form>
 </body>
 </html>
