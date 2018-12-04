@@ -5,6 +5,7 @@
 <title>収支の登録</title>
 </head>
 <body>
+
 <?php //現在年月日を取得し、現在時刻をcur_yer,cur_mon,cur_day,cur_hou,cur_minの5つに分けてセット
 $cur_yer = date ("Y"); 
 $cur_mon = date ("m");
@@ -17,20 +18,19 @@ $cur_min = date ("i");
 <form method="POST" action="add_process.php">
 
     登録日時：<select name="year">
-        <?php foreach(range (1900, $cur_yer - 1) as $year): ?><!--1900年から現在までのセレクトボックスを生成（初期値は現在年）-->
+        <?php foreach(range (1900, $cur_yer) as $year): ?><!--1900年から現在までのセレクトボックスを生成（初期値は現在年）-->
         <option> <?=$year?> </option>
         <?php endforeach; ?>
-        <option selected> <?=$cur_yer?> </option>
     </select>
     年
     <select name="month">
-        <?php foreach(range (1, 12) as $month): ?><!--1から12までの数字のセレクトボックスを生成（初期値は現在月）-->
+        <?php foreach(range (01, 12) as $month): ?><!--1から12までの数字のセレクトボックスを生成（初期値は現在月）-->
         <option> <?=$month?> </option>
         <?php endforeach; ?> 
     </select>
     月
     <select name="day">
-        <?php foreach(range(1, 31) as $day): ?><!--1から31までの数字のセレクトボックスを生成（初期値は現在日）-->
+        <?php foreach(range(01, 31) as $day): ?><!--1から31までの数字のセレクトボックスを生成（初期値は現在日）-->
         <option> <?=$day?> </option>
         <?php endforeach; ?>
     </select>
