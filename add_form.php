@@ -52,7 +52,9 @@ $cur_min = date ("i");
 
     金額：<input type="text" name="price" size="10" maxlength="10"> <br/>
     カテゴリ：<select name="category">
-                <option>食費</option>
+                <option value="0">食費</option>
+                <option value="1">交際費</option>
+                <option value="2">ゲーム</option>
             </select><br/>
 
     支出：<input type="radio" name="exp_inc" value="1"> 
