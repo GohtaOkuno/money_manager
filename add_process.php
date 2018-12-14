@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>エラー！</title>
+<title>エラー！</title><!--このページが表示されるのはエラーを吐いた時のみなので、タイトルはこれでよい-->
 </head>
 <body>
 <?php

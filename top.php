@@ -1,6 +1,6 @@
 <?php 
 require_once 'ConnectDb.php';
-require_once 'user_function.php';
+require_once 'top_search_function.php';
 session_start();
 ?>
 
@@ -13,9 +13,11 @@ session_start();
 <body>
 <h1>Money Managerへようこそ！</h1>
 
+
 <b>収支検索</b><br/>
-<form method="POST" action="top_search_process.php">
-    検索カテゴリ：<select name="send_search">
+<form method="GET" action="top.php">
+    検索カテゴリ：<select name="search_result">
+                <option value="NONE">絞り込みをしない</option><!--『絞り込みをしない』の値を"NONE"とする-->
                 <option value="0">食費</option>
                 <option value="1">交際費</option>
                 <option value="2">ゲーム</option>
@@ -24,35 +26,81 @@ session_start();
             <input type="submit" value="検索">
 </form>
 
+<?php 
+    if(isset($_GET['search_result'])){//GET情報search_resultがNULLであるかをチェック
 
+        //NULLではない場合には、検索したカテゴリの値を変数search_resultに代入しておく 
+        $search_result = $_GET['search_result'];
+
+    } else {
+
+        //NULLだった場合はNONEを代入
+        $search_result = 'NONE';
+    }
+?>
 
 <h3><a href="http://localhost/money_manager/add_form.php"> 収支データの追加はこちら！！！！！</a></h3><br/>
+<h3><a href="http://localhost/money_manager/edit_form.php">収支データの編集はこっち！！！！！！！</a></h3>
 
 現在の収支状況です<br/>
 <table border="1">
     <tr>
-        <th>日時</th><th>価格</th><th>カテゴリー</th><th>収支</th><th>備考</th>
+        <th>日時</th><th>価格</th><th>カテゴリー</th><th>収支</th><th>備考</th><th>編集</th>
     </tr>
 
 <?php
 
     try {
-            //データベースへの接続を確立
-            $db = ConnectDb();
-            //select命令を実行
-            $getTable = $db->prepare('SELECT date,price,category,method,comment from price INNER JOIN price_meta ON price.ID =price_meta.price_id ORDER BY date DESC');
+        
+        $db = ConnectDb();
+        
+            if("NONE" === $search_result){//セレクトボックスに'絞り込みをしない'が入力されているかを確認し、入力されていればtrue
+
+            //一覧表を取得
+            $getTable = $db->prepare("SELECT date,price,category,method,comment from price INNER JOIN price_meta ON price.ID =price_meta.price_id ORDER BY date DESC");
+
+            //SELECT命令を実行
             $getTable->execute();
+
             //結果セットの内容を順に出力
             while($row = $getTable->fetch(PDO::FETCH_ASSOC)){
             ?>
+            <form method="POST" action="edit.php">
             <tr>
                 <td align="center"><?=($row['date'])?></td>
                 <td align="center"><?=($row['price'])?>円</td>
-                <td align="center"><?=judgecategory(($row['category']))?></td>
-                <td align="center"><?=judgemethod(($row['method']))?></td>
-                <td align="center"><?=($row['comment'])?></td><br/>
+                <td align="center"><?=judge_category(($row['category']))?></td>
+                <td align="center"><?=judge_method(($row['method']))?></td>
+                <td align="center"><?=($row['comment'])?></td>
+                <td><input type="submit" value="編集"></td><br/>
             </tr>
-    <?php
+            </form>
+            <?php
+            }
+            
+        } else {//検索用のセレクトボックスに検索用の値が入力されていた場合
+
+            //検索カテゴリの値をSQL文にあてはめる
+            $search_getTable = $db->prepare("SELECT date,price,category,method,comment from price INNER JOIN price_meta ON price.ID =price_meta.price_id WHERE category = $search_result ORDER BY date DESC");
+            
+            //SELECT命令を実行
+            $search_getTable->execute();
+            
+            //結果セットの内容を順に出力
+            while($row = $search_getTable->fetch(PDO::FETCH_ASSOC)){
+        ?>
+                <form method="POST" action="edit.php" name="data">
+                <tr>
+                    <td align="center"><?=($row['date'])?></td>
+                    <td align="center"><?=($row['price'])?>円</td>
+                    <td align="center"><?=judge_category(($row['category']))?></td>
+                    <td align="center"><?=judge_method(($row['method']))?></td>
+                    <td align="center"><?=($row['comment'])?></td>
+                    <td><input name="data" type="submit" value="編集"></td><br/>
+                </tr>
+                </form>
+        <?php
+        }
         }
 } catch(PDOException $e){
     $e->getMessage;
