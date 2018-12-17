@@ -17,35 +17,44 @@ $cur_min = date ("i");
 <!--年月日の入力フォームを作成-->
 <form method="POST" action="add_process.php">
 
-    登録日時：<select name="year">
-        <?php foreach(range (1900, $cur_yer) as $year): ?><!--1900年から現在までのセレクトボックスを生成-->
-        <option> <?=$year?> </option>
-        <?php endforeach; ?>
+    登録日時：<select name="year"><!--年を生成(1900~現在まで)-->
+        <?php for($i = 1900; $i <= $cur_yer; $i++) { ?>
+            <option> <?php echo $i?> </option>
+        <?php } ?>
     </select>
+
     年
-    <select name="month">
-        <?php foreach(range (01, 12) as $month): ?><!--1から12までの数字のセレクトボックスを生成-->
-        <option> <?=$month?> </option>
-        <?php endforeach; ?> 
+
+    <select name="month"><!--月を生成(1~12月)-->
+    <?php for($i = 1; $i <= 12; $i++) { ?>
+            <option> <?php echo $i?> </option>
+        <?php } ?>
     </select>
+
     月
-    <select name="day">
-        <?php foreach(range(01, 31) as $day): ?><!--1から31までの数字のセレクトボックスを生成-->
-        <option> <?=$day?> </option>
-        <?php endforeach; ?>
+
+    <select name="day"><!--日を生成(1~31日)-->
+    <?php for($i = 1; $i <= 31; $i++) { ?>
+            <option> <?php echo $i?> </option>
+        <?php } ?>
     </select>
+
     日
-    <select name="hour">
-        <?php foreach(range(00, 23) as $hour): ?><!--0から23までの数字のセレクトボックスを生成-->
-        <option > <?=$hour?> </option>
-        <?php endforeach;?>
+
+    <select name="hour"><!--時を生成(0~23時)-->
+    <?php for($i = 0; $i <= 23; $i++) { ?>
+            <option> <?php echo $i?> </option>
+        <?php } ?>
     </select>
+
     時
-    <select name="min">
-        <?php foreach(range(00, 59) as $min): ?><!--00から59までの数字のセレクトボックスを生成-->
-        <option> <?=$min?> </option>
-        <?php endforeach;?>
+
+    <select name="min"><!--分を生成(0~59分)-->
+    <?php for($i = 0; $i <= 59; $i++) { ?>
+            <option> <?php echo $i?> </option>
+        <?php } ?>
     </select>
+
     分
 
     <br/>

@@ -57,7 +57,7 @@ session_start();
             if("NONE" === $search_result){//セレクトボックスに'絞り込みをしない'が入力されているかを確認し、入力されていればtrue
 
             //一覧表を取得
-            $getTable = $db->prepare("SELECT date,price,category,method,comment from price INNER JOIN price_meta ON price.ID =price_meta.price_id ORDER BY date DESC");
+            $getTable = $db->prepare("SELECT date,price,category,method,comment,price_id from price INNER JOIN price_meta ON price.ID = price_meta.price_id ORDER BY date DESC");
 
             //SELECT命令を実行
             $getTable->execute();
@@ -65,14 +65,15 @@ session_start();
             //結果セットの内容を順に出力
             while($row = $getTable->fetch(PDO::FETCH_ASSOC)){
             ?>
-            <form method="POST" action="edit.php">
+            <form method="GET" action="edit.php">
             <tr>
                 <td align="center"><?=($row['date'])?></td>
                 <td align="center"><?=($row['price'])?>円</td>
                 <td align="center"><?=judge_category(($row['category']))?></td>
                 <td align="center"><?=judge_method(($row['method']))?></td>
                 <td align="center"><?=($row['comment'])?></td>
-                <td><input type="submit" value="編集"></td><br/>
+                <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">編集</button></td><br/>
+                
             </tr>
             </form>
             <?php
@@ -81,7 +82,7 @@ session_start();
         } else {//検索用のセレクトボックスに検索用の値が入力されていた場合
 
             //検索カテゴリの値をSQL文にあてはめる
-            $search_getTable = $db->prepare("SELECT date,price,category,method,comment from price INNER JOIN price_meta ON price.ID =price_meta.price_id WHERE category = $search_result ORDER BY date DESC");
+            $search_getTable = $db->prepare("SELECT date,price,category,method,comment,price_id from price INNER JOIN price_meta ON price.ID =price_meta.price_id WHERE category = $search_result ORDER BY date DESC");
             
             //SELECT命令を実行
             $search_getTable->execute();
@@ -89,14 +90,14 @@ session_start();
             //結果セットの内容を順に出力
             while($row = $search_getTable->fetch(PDO::FETCH_ASSOC)){
         ?>
-                <form method="POST" action="edit.php" name="data">
+            <form method="GET" action="edit.php">
                 <tr>
                     <td align="center"><?=($row['date'])?></td>
                     <td align="center"><?=($row['price'])?>円</td>
                     <td align="center"><?=judge_category(($row['category']))?></td>
                     <td align="center"><?=judge_method(($row['method']))?></td>
                     <td align="center"><?=($row['comment'])?></td>
-                    <td><input name="data" type="submit" value="編集"></td><br/>
+                    <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">編集</button></td><br/>
                 </tr>
                 </form>
         <?php
