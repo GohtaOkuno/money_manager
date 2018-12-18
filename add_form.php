@@ -16,43 +16,83 @@ $cur_min = date ("i");
 
 <!--年月日の入力フォームを作成-->
 <form method="POST" action="add_process.php">
+<?$dt_option="";?>
 
     登録日時：<select name="year"><!--年を生成(1900~現在まで)-->
-        <?php for($i = 1900; $i <= $cur_yer; $i++) { ?>
-            <option> <?php echo $i?> </option>
-        <?php } ?>
+    <?php   
+    for($i = 1900; $i <= $cur_yer; $i++) {
+        if($i == $cur_yer) {
+             $dt_option .='<option value="'.$i.'"selected>'.$i.'</option>';
+        } else {
+            $dt_option .='<option value="'.$i.'">'.$i.'</option>';
+        }
+    }
+    echo $dt_option;
+    unset($dt_option);
+    ?>
     </select>
 
     年
 
     <select name="month"><!--月を生成(1~12月)-->
-    <?php for($i = 1; $i <= 12; $i++) { ?>
-            <option> <?php echo $i?> </option>
-        <?php } ?>
+    <?php   
+    for($i = 1; $i <= 12; $i++) {
+        if($i == $cur_mon) {
+            $dt_option .='<option value="'.$i.'"selected>'.$i.'</option>';
+        } else {
+            $dt_option .='<option value="'.$i.'">'.$i.'</option>';
+        }
+    }
+        echo $dt_option;
+        unset($dt_option);
+        ?>
     </select>
-
     月
 
     <select name="day"><!--日を生成(1~31日)-->
-    <?php for($i = 1; $i <= 31; $i++) { ?>
-            <option> <?php echo $i?> </option>
-        <?php } ?>
+    <?php   
+    for($i = 1; $i <= 31; $i++) {
+        if($i == $cur_day) {
+            $dt_option .='<option value="'.$i.'"selected>'.$i.'</option>';
+        } else {
+            $dt_option .='<option value="'.$i.'">'.$i.'</option>';
+        }
+    }
+        echo $dt_option;
+        unset($dt_option);
+        ?>
     </select>
 
     日
 
     <select name="hour"><!--時を生成(0~23時)-->
-    <?php for($i = 0; $i <= 23; $i++) { ?>
-            <option> <?php echo $i?> </option>
-        <?php } ?>
+    <?php   
+    for($i = 0; $i <= 23; $i++) {
+        if($i == $cur_hou) {
+            $dt_option .='<option value="'.$i.'"selected>'.$i.'</option>';
+        } else {
+            $dt_option .='<option value="'.$i.'">'.$i.'</option>';
+        }
+    }
+        echo $dt_option;
+        unset($dt_option);
+        ?>
     </select>
 
     時
 
     <select name="min"><!--分を生成(0~59分)-->
-    <?php for($i = 0; $i <= 59; $i++) { ?>
-            <option> <?php echo $i?> </option>
-        <?php } ?>
+    <?php   
+    for($i = 1; $i <= 59; $i++) {
+        if($i == $cur_min) {
+            $dt_option .='<option value="'.$i.'"selected>'.$i.'</option>';
+        } else {
+            $dt_option .='<option value="'.$i.'">'.$i.'</option>';
+        }
+    }
+        echo $dt_option;
+        unset($dt_option);
+        ?>
     </select>
 
     分

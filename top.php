@@ -40,7 +40,6 @@ session_start();
 ?>
 
 <h3><a href="http://localhost/money_manager/add_form.php"> 収支データの追加はこちら！！！！！</a></h3><br/>
-<h3><a href="http://localhost/money_manager/edit_form.php">収支データの編集はこっち！！！！！！！</a></h3>
 
 現在の収支状況です<br/>
 <table border="1">
