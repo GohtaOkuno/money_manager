@@ -8,7 +8,7 @@
 
 <?php
 require_once 'ConnectDb.php';
-require_once 'top_search_function.php';
+require_once 'judge_function.php';
 //現在年月日を取得し、現在時刻をcur_yer,cur_mon,cur_day,cur_hou,cur_minの5つに分けてセット（年以外はそのうち使います）
 $cur_yer = date ("Y"); 
 $cur_mon = date ("m");

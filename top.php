@@ -1,6 +1,6 @@
 <?php 
 require_once 'ConnectDb.php';
-require_once 'top_search_function.php';
+require_once 'judge_function.php';
 session_start();
 ?>
 
@@ -9,6 +9,7 @@ session_start();
 <head>
 <meta charset="utf-8">
 <title>Money Manager</title>
+
 </head>
 <body>
 <h1>Money Managerへようこそ！</h1>
@@ -44,7 +45,7 @@ session_start();
 現在の収支状況です<br/>
 <table border="1">
     <tr>
-        <th>日時</th><th>価格</th><th>カテゴリー</th><th>収支</th><th>備考</th><th>編集</th>
+        <th>日時</th><th>価格</th><th>カテゴリー</th><th>収支</th><th>備考</th><th>編集</th><th>削除</th>
     </tr>
 
 <?php
@@ -71,10 +72,15 @@ session_start();
                 <td align="center"><?=judge_category(($row['category']))?></td>
                 <td align="center"><?=judge_method(($row['method']))?></td>
                 <td align="center"><?=($row['comment'])?></td>
-                <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">編集</button></td><br/>
+                <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">編集</button></td>
+                </form>
+                
+                <form method="GET" action="top.php">
+                <td><button type="submit" value="<?php echo ($row['delete_price_id']);?>" onClick="disp()">削除</td>
+                </form>
+                <br/>
                 
             </tr>
-            </form>
             <?php
             }
             
@@ -96,7 +102,13 @@ session_start();
                     <td align="center"><?=judge_category(($row['category']))?></td>
                     <td align="center"><?=judge_method(($row['method']))?></td>
                     <td align="center"><?=($row['comment'])?></td>
-                    <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">編集</button></td><br/>
+                    <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">編集</button></td>
+                    </form>
+                    
+                    <form method="GET" action="top.php">
+                    <td><button type="submit" value="<?php echo ($row['delete_price_id']);?>" onClick="disp()">削除</td>
+                    </form>
+                    <br/>
                 </tr>
                 </form>
         <?php
@@ -105,6 +117,7 @@ session_start();
 } catch(PDOException $e){
     $e->getMessage;
 }
+
 ?>
 </table>
 </body>
