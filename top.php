@@ -10,9 +10,46 @@ session_start();
 <meta charset="utf-8">
 <title>Money Manager</title>
 
+<script type="text/javascript"> 
+<!-- 
+
+function check(){
+
+	if(window.confirm('送信してよろしいですか？')){ // 確認ダイアログを表示
+
+		return true; // 「OK」時は送信を実行
+
+	}
+	else{ // 「キャンセル」時の処理
+
+		window.alert('キャンセルされました'); // 警告ダイアログを表示
+		return false; // 送信を中止
+
+	}
+
+}
+
+// -->
+</script>
+
 </head>
 <body>
 <h1>Money Managerへようこそ！</h1>
+
+<?php
+$db = ConnectDb();
+
+//削除ボタンが押下され、GET情報が送られてきていた場合にはDELETE文をDBに送信し、そうでない場合には何もしない
+if(isset($_GET['price_id'])){
+    $delete_id = ($_GET['price_id']);//情報が送信されてきた場合は変数$delete_idにGET情報を代入
+    try{
+       $delete_method = $db->prepare('DELETE price FROM price LEFT JOIN price_meta ON price.ID = price_meta.price_id WHERE price_meta.price_id = '.$delete_id.'');
+       $delete_method->execute();
+    }catch(PDOException $e){
+        $e->getMessage();
+    }
+}//elseの場合には何もしない。
+?>
 
 
 <b>収支検索</b><br/>
@@ -75,8 +112,8 @@ session_start();
                 <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">編集</button></td>
                 </form>
                 
-                <form method="GET" action="top.php">
-                <td><button type="submit" value="<?php echo ($row['delete_price_id']);?>" onClick="disp()">削除</td>
+                <form method="GET" action="top.php"onSubmit="return check()">
+                <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">削除</td>
                 </form>
                 <br/>
                 
@@ -105,8 +142,8 @@ session_start();
                     <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">編集</button></td>
                     </form>
                     
-                    <form method="GET" action="top.php">
-                    <td><button type="submit" value="<?php echo ($row['delete_price_id']);?>" onClick="disp()">削除</td>
+                    <form method="GET" action="top.php"onSubmit="return check()">
+                    <td><button type="submit" value="<?php echo ($row['price_id']);?>" name="price_id">削除</td>
                     </form>
                     <br/>
                 </tr>

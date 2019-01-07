@@ -107,8 +107,8 @@ $cur_min = date ("i");
                 <option value="3">収入</option>
             </select><br/>
 
-    支出：<input type="radio" name="exp_inc" value="1"> 
-    収入：<input type="radio" name="exp_inc" value="2"><br/>
+    支出/収入<input type="radio" name="exp_inc" value="1"> 
+            <input type="radio" name="exp_inc" value="2"><br/>
 
     備考：<input type="text" name="remarks" size="10" maxlength="20"><br/>
     <input type="submit" name="登録する">
