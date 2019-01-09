@@ -6,7 +6,7 @@
 </head>
 <body>
 <?php
-require_once 'ConnectDb.php';
+require_once 'connect_db.php';
 
 //POST情報で取得したデータを対応する変数に格納
 $year = $_POST['year'];
@@ -16,8 +16,8 @@ $hour = $_POST['hour'];
 $min = $_POST['min'];
 $price = $_POST['price'];
 $price_id = $_POST['price_id'];
-$comment = $_POST['remarks'];
-$method = $_POST['exp_inc'];
+$comment = $_POST['comment'];
+$method = $_POST['method'];
 $category = $_POST['category'];
 
 //date関数とmktime関数でPOST情報をDATETIME型で扱える形に整形
@@ -43,20 +43,24 @@ $shape_dt = date('Y-m-d H:i:s', mktime($hour, $min, 0, $month, $day, $year));
     <?=exit;}
 
 try{
-    $db = ConnectDb();
+    $db = connect_db();
 
         //priceテーブルへ送信するデータをUPDATE命令にセットする
-        $setdb_price = $db->prepare('UPDATE money_manager.price SET date = "'.$shape_dt.'", price = '.$price.' WHERE id = '.$price_id.'');
+        $setdb_price = $db->prepare('UPDATE money_manager.price 
+                                    SET date = "'.$shape_dt.'", price = '.$price.' 
+                                    WHERE id = '.$price_id.'');
         //UPDATE文を実行
         $setdb_price->execute();
 
         //price_idの値が$price_maxidと一致する項目のみにUPDATE命令を実行
-        $setdb_price_meta = $db->prepare('UPDATE money_manager.price_meta SET category = '.$category.', method = '.$method.', comment = "'.$comment.'" WHERE price_id = '.$price_id.'');
+        $setdb_price_meta = $db->prepare('UPDATE money_manager.price_meta 
+                                        SET category = '.$category.', method = '.$method.', comment = "'.$comment.'" 
+                                        WHERE price_id = '.$price_id.'');
         //UPDATE文を実行
         $setdb_price_meta->execute();
 
             //すべての処理が無事に終了したらトップページにリダイレクト
-            header('Location: http://localhost/money_manager/top.php');
+            header('Location: http://localhost/money_manager/index.php');
 
 }catch(PDOException $e){
     echo $e->getMessage;

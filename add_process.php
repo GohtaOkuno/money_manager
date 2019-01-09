@@ -6,8 +6,8 @@
 </head>
 <body>
 <?php
-require_once 'ConnectDb.php';
-
+require_once 'connect_db.php';
+require_once 'function.php';
 //POST情報で取得したデータを対応する変数に格納
 $year = $_POST['year'];
 $day = $_POST['day'];
@@ -40,10 +40,11 @@ $shape_dt = date('Y-m-d H:i:s', mktime($hour, $min, 0, $month, $day, $year));
 
 
 try{
-    $db = ConnectDb();
+    $db = connect_db();
 
         //priceテーブルへ送信するデータをINSERT命令にセットする
-        $setdb_price = $db->prepare('INSERT INTO price(date, price) VALUES(:date, :price)');
+        $setdb_price = $db->prepare('INSERT INTO price(date, price) 
+                                    VALUES(:date, :price)');
 
         //INSERT命令にdateとpriceの内容をセット
         $setdb_price->bindValue(':date', $shape_dt);
@@ -59,20 +60,21 @@ try{
             $max_id = $max_id = $price_maxid->fetchAll(PDO::FETCH_ASSOC);
 
             //price_metaテーブルへ送信するデータをINSERT命令にセットする
-            $setdb_price_meta = $db->prepare('INSERT INTO price_meta(price_id, category, method, comment) VALUES(:price_id, :category, :method, :comment)');
+            $setdb_price_meta = $db->prepare('INSERT INTO price_meta(price_id, category, method, comment) 
+                                            VALUES(:price_id, :category, :method, :comment)');
 
             //INSERT命令にprice_id,category,method,commentの内容をセット
             $setdb_price_meta->bindValue(':price_id', $max_id[0]['id']);
             $setdb_price_meta->bindValue(':category', $_POST['category']);
-            $setdb_price_meta->bindValue(':method', $_POST['exp_inc']);
-            $setdb_price_meta->bindValue(':comment', $_POST['remarks']);
+            $setdb_price_meta->bindValue(':method', $_POST['method']);
+            $setdb_price_meta->bindValue(':comment', $_POST['comment']);
 
             //INSERT命令を実行
             $setdb_price_meta->execute();
 
 
             //すべての処理が無事に終了したら収支の登録ページにリダイレクト（仮）
-            header('Location: http://localhost/money_manager/top.php');
+            header('Location: http://localhost/money_manager/index.php');
 
 }catch(PDOException $e){
     echo $e->getMessage;
