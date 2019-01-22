@@ -10,31 +10,17 @@ session_start();
 <meta charset="utf-8">
 <title>Money Manager</title>
 
-<script type="text/javascript"> 
-<!-- 
-
-function check(){
-
-	if(window.confirm('削除してよろしいですか？')){ // 確認ダイアログを表示
-
-		return true; // 「OK」時は送信を実行
-
-	}
-	else{ // 「キャンセル」時の処理
-
-		window.alert('キャンセルされました'); // 警告ダイアログを表示
-		return false; // 送信を中止
-
-	}
-
-}
-
-// -->
-</script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/style.css">
 
 </head>
 <body>
 <h1>Money Managerへようこそ！</h1>
+
+<div id="container"></div>
+<script src="./js/pie.js"></script>
 
 <?php
 $db = connect_db();
